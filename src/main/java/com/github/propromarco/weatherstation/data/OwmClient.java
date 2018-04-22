@@ -20,7 +20,7 @@ public class OwmClient {
         TICK, HOUR, DAY
     }
 
-    private String baseOwmUrl = "http://api.openweathermap.org/data/2.1/";
+    private String baseOwmUrl = "http://api.openweathermap.org/data/2.5/";
     private String owmAPPID = null;
 
     private HttpClient httpClient;
@@ -230,7 +230,7 @@ public class OwmClient {
      * @throws IOException   if there's some network error or the OWM server replies with a error.
      */
     public WeatherForecastResponse forecastWeatherAtCity(String cityName) throws JSONException, IOException {
-        String subUrl = String.format(Locale.ROOT, "forecast/city?q=%s&type=json&units=metric", cityName);
+        String subUrl = String.format(Locale.ROOT, "forecast?q=%s&units=metric&lang=de", cityName);
         JSONObject response = doQuery(subUrl);
         return new WeatherForecastResponse(response);
     }

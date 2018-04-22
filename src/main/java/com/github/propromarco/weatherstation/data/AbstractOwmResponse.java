@@ -17,19 +17,19 @@ abstract class AbstractOwmResponse {
     private final String message;
     private final float calctime;
 
-    public AbstractOwmResponse (JSONObject json) {
-        this.code = json.optInt (AbstractOwmResponse.JSON_COD, Integer.MIN_VALUE);
-        this.message = json.optString (AbstractOwmResponse.JSON_MESSAGE);
-        String calcTimeStr = json.optString (AbstractOwmResponse.JSON_CALCTIME);
+    public AbstractOwmResponse(JSONObject json) {
+        this.code = json.optInt(AbstractOwmResponse.JSON_COD, Integer.MIN_VALUE);
+        this.message = json.optString(AbstractOwmResponse.JSON_MESSAGE);
+        String calcTimeStr = json.optString(AbstractOwmResponse.JSON_CALCTIME);
         float calcTimeTotal = Float.NaN;
-        if (calcTimeStr.length () > 0) {
+        if (calcTimeStr.length() > 0) {
             try {
-                calcTimeTotal = Float.valueOf (calcTimeStr);
+                calcTimeTotal = Float.valueOf(calcTimeStr);
             } catch (NumberFormatException nfe) { // So.. it's not a number.. let's see if we can still find it's value.
-                String totalCalcTimeStr = AbstractOwmResponse.getValueStrFromCalcTimePart (calcTimeStr, AbstractOwmResponse.JSON_CALCTIME_TOTAL);
+                String totalCalcTimeStr = AbstractOwmResponse.getValueStrFromCalcTimePart(calcTimeStr, AbstractOwmResponse.JSON_CALCTIME_TOTAL);
                 if (totalCalcTimeStr != null) {
                     try {
-                        calcTimeTotal = Float.valueOf (totalCalcTimeStr);
+                        calcTimeTotal = Float.valueOf(totalCalcTimeStr);
                     } catch (NumberFormatException nfe2) {
                         calcTimeTotal = Float.NaN;
                     }
@@ -39,44 +39,47 @@ abstract class AbstractOwmResponse {
         this.calctime = calcTimeTotal;
     }
 
-    public boolean hasCode () {
+    public boolean hasCode() {
         return this.code != Integer.MIN_VALUE;
     }
-    public int getCode () {
+
+    public int getCode() {
         return this.code;
     }
 
-    public boolean hasMessage () {
-        return this.message != null && this.message.length () > 0;
+    public boolean hasMessage() {
+        return this.message != null && this.message.length() > 0;
     }
-    public String getMessage () {
+
+    public String getMessage() {
         return this.message;
     }
 
-    public boolean hasCalcTime () {
-        return !Double.isNaN (this.calctime);
+    public boolean hasCalcTime() {
+        return !Double.isNaN(this.calctime);
     }
-    public double getCalcTime () {
+
+    public double getCalcTime() {
         return this.calctime;
     }
 
-    static String getValueStrFromCalcTimePart (final String calcTimeStr, final String part) {
-        Pattern keyValuePattern = Pattern.compile (part + "\\s*=\\s*([\\d\\.]*)");
-        Matcher matcher = keyValuePattern.matcher (calcTimeStr);
-        if (matcher.find () && matcher.groupCount () == 1) {
-            return matcher.group (1);
+    static String getValueStrFromCalcTimePart(final String calcTimeStr, final String part) {
+        Pattern keyValuePattern = Pattern.compile(part + "\\s*=\\s*([\\d\\.]*)");
+        Matcher matcher = keyValuePattern.matcher(calcTimeStr);
+        if (matcher.find() && matcher.groupCount() == 1) {
+            return matcher.group(1);
         }
         return null;
     }
 
-    static float getValueFromCalcTimeStr (final String calcTimeStr, final String part) {
-        if (calcTimeStr == null || calcTimeStr.length () == 0)
+    static float getValueFromCalcTimeStr(final String calcTimeStr, final String part) {
+        if (calcTimeStr == null || calcTimeStr.length() == 0)
             return Float.NaN;
         float value = Float.NaN;
-        String valueStr = AbstractOwmResponse.getValueStrFromCalcTimePart (calcTimeStr, part);
+        String valueStr = AbstractOwmResponse.getValueStrFromCalcTimePart(calcTimeStr, part);
         if (valueStr != null) {
             try {
-                value = Float.valueOf (valueStr);
+                value = Float.valueOf(valueStr);
             } catch (NumberFormatException nfe) {
                 value = Float.NaN;
             }

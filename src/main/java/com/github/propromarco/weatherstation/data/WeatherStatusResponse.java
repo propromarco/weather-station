@@ -10,28 +10,32 @@ import java.util.List;
 public class WeatherStatusResponse extends AbstractOwmResponse {
     private final List<StatusWeatherData> status;
 
-    /** A parser for a weather status query response
-     * @param json The JSON obejct built from the OWM response */
-    public WeatherStatusResponse (JSONObject json) {
-        super (json);
-        JSONArray jsonWeatherStatus = json.optJSONArray (AbstractOwmResponse.JSON_LIST);
+    /**
+     * A parser for a weather status query response
+     *
+     * @param json The JSON obejct built from the OWM response
+     */
+    public WeatherStatusResponse(JSONObject json) {
+        super(json);
+        JSONArray jsonWeatherStatus = json.optJSONArray(AbstractOwmResponse.JSON_LIST);
         if (jsonWeatherStatus == null) {
-            this.status = Collections.emptyList ();
+            this.status = Collections.emptyList();
         } else {
-            this.status = new ArrayList<StatusWeatherData>(jsonWeatherStatus.length ());
-            for (int i = 0; i <jsonWeatherStatus.length (); i++) {
-                JSONObject jsonStatus = jsonWeatherStatus.optJSONObject (i);
+            this.status = new ArrayList<StatusWeatherData>(jsonWeatherStatus.length());
+            for (int i = 0; i < jsonWeatherStatus.length(); i++) {
+                JSONObject jsonStatus = jsonWeatherStatus.optJSONObject(i);
                 if (jsonStatus != null) {
-                    this.status.add (new StatusWeatherData (jsonStatus));
+                    this.status.add(new StatusWeatherData(jsonStatus));
                 }
             }
         }
     }
 
-    public boolean hasWeatherStatus () {
-        return this.status != null && !this.status.isEmpty ();
+    public boolean hasWeatherStatus() {
+        return this.status != null && !this.status.isEmpty();
     }
-    public List<StatusWeatherData> getWeatherStatus () {
+
+    public List<StatusWeatherData> getWeatherStatus() {
         return this.status;
     }
 }

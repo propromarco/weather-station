@@ -9,11 +9,11 @@ import java.util.List;
 
 public class WeatherForecastResponse extends AbstractOwmResponse {
     static public class City {
-        static private final String JSON_ID             = "id";
-        static private final String JSON_COORD          = "coord";
-        static private final String JSON_COUNTRY        = "country";
-        static private final String JSON_NAME           = "name";
-        static private final String JSON_DT_CALC        = "dt_calc";
+        static private final String JSON_ID = "id";
+        static private final String JSON_COORD = "coord";
+        static private final String JSON_COUNTRY = "country";
+        static private final String JSON_NAME = "name";
+        static private final String JSON_DT_CALC = "dt_calc";
         static private final String JSON_STATIONS_COUNT = "stations_count";
 
         private final int id;
@@ -23,85 +23,93 @@ public class WeatherForecastResponse extends AbstractOwmResponse {
         private final long dtCalc;
         private final int stationsCount;
 
-        public City (JSONObject json) {
-            this.id = json.optInt (City.JSON_ID, Integer.MIN_VALUE);
-            JSONObject jsonCoord = json.optJSONObject (City.JSON_COORD);
+        public City(JSONObject json) {
+            this.id = json.optInt(City.JSON_ID, Integer.MIN_VALUE);
+            JSONObject jsonCoord = json.optJSONObject(City.JSON_COORD);
             if (jsonCoord != null)
-                this.coord = new LocalizedWeatherData.GeoCoord (jsonCoord);
+                this.coord = new LocalizedWeatherData.GeoCoord(jsonCoord);
             else
                 this.coord = null;
-            this.country = json.optString (City.JSON_COUNTRY);
-            this.name = json.optString (City.JSON_NAME);
-            this.dtCalc = json.optLong (City.JSON_DT_CALC, Long.MIN_VALUE);
-            this.stationsCount = json.optInt (City.JSON_STATIONS_COUNT, Integer.MIN_VALUE);
+            this.country = json.optString(City.JSON_COUNTRY);
+            this.name = json.optString(City.JSON_NAME);
+            this.dtCalc = json.optLong(City.JSON_DT_CALC, Long.MIN_VALUE);
+            this.stationsCount = json.optInt(City.JSON_STATIONS_COUNT, Integer.MIN_VALUE);
         }
 
-        public boolean hasId () {
+        public boolean hasId() {
             return this.id != Integer.MIN_VALUE;
         }
-        public int getId () {
+
+        public int getId() {
             return this.id;
         }
 
-        public boolean hasCoordinates () {
+        public boolean hasCoordinates() {
             return this.coord != null;
         }
-        public LocalizedWeatherData.GeoCoord getCoordinates () {
+
+        public LocalizedWeatherData.GeoCoord getCoordinates() {
             return this.coord;
         }
 
-        public boolean hasCountryCode () {
+        public boolean hasCountryCode() {
             return this.country != null;
         }
-        public String getCountryCode () {
+
+        public String getCountryCode() {
             return this.country;
         }
 
-        public boolean hasName () {
+        public boolean hasName() {
             return this.name != null;
         }
-        public String getName () {
+
+        public String getName() {
             return this.name;
         }
 
-        public boolean hasDateTimeCalc () {
+        public boolean hasDateTimeCalc() {
             return this.dtCalc != Long.MIN_VALUE;
         }
-        public long getDateTimeCalc () {
+
+        public long getDateTimeCalc() {
             return this.dtCalc;
         }
 
-        public boolean hasStationsCount () {
+        public boolean hasStationsCount() {
             return this.stationsCount != Integer.MIN_VALUE;
         }
-        public int getStationsCount () {
+
+        public int getStationsCount() {
             return this.stationsCount;
         }
     }
 
     public static class Sys {
-        private static final String JSON_COUNTRY    = "country";
+        private static final String JSON_COUNTRY = "country";
         private static final String JSON_POPULATION = "population";
 
         private final String country;
         private final int population;
 
-        public Sys (JSONObject json) {
-            this.country = json.optString (Sys.JSON_COUNTRY);
-            this.population = json.optInt (Sys.JSON_POPULATION, Integer.MIN_VALUE);
+        public Sys(JSONObject json) {
+            this.country = json.optString(Sys.JSON_COUNTRY);
+            this.population = json.optInt(Sys.JSON_POPULATION, Integer.MIN_VALUE);
         }
 
-        public boolean hasCountry () {
-            return this.country != null && this.country.length () > 0;
+        public boolean hasCountry() {
+            return this.country != null && this.country.length() > 0;
         }
-        public String getCountry () {
+
+        public String getCountry() {
             return this.country;
         }
 
-        public boolean hasPopulation () {
+        public boolean hasPopulation() {
             return this.population != Integer.MIN_VALUE;
         }
-        public int getPopulation () {
+
+        public int getPopulation() {
             return this.population;
         }
     }
@@ -110,7 +118,7 @@ public class WeatherForecastResponse extends AbstractOwmResponse {
     static private final String JSON_CITY = "city";
     static private final String JSON_UNITS = "units";
     static private final String JSON_MODEL = "model";
-    private static final String JSON_SYS       = "sys";
+    private static final String JSON_SYS = "sys";
 
     private final String url;
     private final City city;
@@ -119,73 +127,82 @@ public class WeatherForecastResponse extends AbstractOwmResponse {
     private final Sys sys;
     private final List<ForecastWeatherData> forecasts;
 
-    /** A weather forecast response parser
-     * @param json the json object with the weather forecast response */
-    public WeatherForecastResponse (JSONObject json) {
-        super (json);
-        this.url = json.optString (WeatherForecastResponse.JSON_URL);
-        JSONObject jsonCity = json.optJSONObject (WeatherForecastResponse.JSON_CITY);
+    /**
+     * A weather forecast response parser
+     *
+     * @param json the json object with the weather forecast response
+     */
+    public WeatherForecastResponse(JSONObject json) {
+        super(json);
+        this.url = json.optString(WeatherForecastResponse.JSON_URL);
+        JSONObject jsonCity = json.optJSONObject(WeatherForecastResponse.JSON_CITY);
         if (jsonCity != null)
-            this.city = new City (jsonCity);
+            this.city = new City(jsonCity);
         else
             this.city = null;
-        this.units = json.optString (WeatherForecastResponse.JSON_UNITS);
-        this.model = json.optString (WeatherForecastResponse.JSON_MODEL);
+        this.units = json.optString(WeatherForecastResponse.JSON_UNITS);
+        this.model = json.optString(WeatherForecastResponse.JSON_MODEL);
 
-        JSONObject jsonSys = json.optJSONObject (WeatherForecastResponse.JSON_SYS);
-        this.sys = jsonSys != null ? new Sys (jsonSys) : null;
+        JSONObject jsonSys = json.optJSONObject(WeatherForecastResponse.JSON_SYS);
+        this.sys = jsonSys != null ? new Sys(jsonSys) : null;
 
-        JSONArray jsonForecasts = json.optJSONArray (AbstractOwmResponse.JSON_LIST);
+        JSONArray jsonForecasts = json.optJSONArray(AbstractOwmResponse.JSON_LIST);
         if (jsonForecasts != null) {
-            this.forecasts = new ArrayList<ForecastWeatherData>(jsonForecasts.length ());
-            for (int i = 0; i<jsonForecasts.length (); i++) {
-                JSONObject jsonForecast = jsonForecasts.optJSONObject (i);
-                this.forecasts.add (new ForecastWeatherData (jsonForecast));
+            this.forecasts = new ArrayList<ForecastWeatherData>(jsonForecasts.length());
+            for (int i = 0; i < jsonForecasts.length(); i++) {
+                JSONObject jsonForecast = jsonForecasts.optJSONObject(i);
+                this.forecasts.add(new ForecastWeatherData(jsonForecast));
             }
         } else {
-            this.forecasts = Collections.emptyList ();
+            this.forecasts = Collections.emptyList();
         }
     }
 
-    public boolean hasUrl () {
-        return this.url != null && this.url.length () > 0;
+    public boolean hasUrl() {
+        return this.url != null && this.url.length() > 0;
     }
-    public String getUrl () {
+
+    public String getUrl() {
         return this.url;
     }
 
-    public boolean hasCity () {
+    public boolean hasCity() {
         return this.city != null;
     }
-    public City getCity () {
+
+    public City getCity() {
         return this.city;
     }
 
-    public boolean hasUnits () {
-        return this.units != null && this.units.length () > 0;
+    public boolean hasUnits() {
+        return this.units != null && this.units.length() > 0;
     }
-    public String getUnits () {
+
+    public String getUnits() {
         return this.units;
     }
 
-    public boolean hasModel () {
-        return this.model != null && this.model.length () > 0;
+    public boolean hasModel() {
+        return this.model != null && this.model.length() > 0;
     }
-    public String getModel () {
+
+    public String getModel() {
         return this.model;
     }
 
-    public boolean hasSys () {
+    public boolean hasSys() {
         return this.sys != null;
     }
-    public Sys getSys () {
+
+    public Sys getSys() {
         return this.sys;
     }
 
-    public boolean hasForecasts () {
-        return this.forecasts != null && !this.forecasts.isEmpty ();
+    public boolean hasForecasts() {
+        return this.forecasts != null && !this.forecasts.isEmpty();
     }
-    public List<ForecastWeatherData> getForecasts () {
+
+    public List<ForecastWeatherData> getForecasts() {
         return this.forecasts;
     }
 }

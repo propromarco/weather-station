@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Index</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+        td {
+            text-align: center;
+        }
+    </style>
+</head>
+<!--/*@thymesVar id="ort" type="com.github.propromarco.weatherstation.data.WeatherForecastResponse"*/-->
+<!--/*@thymesVar id="helper" type="com.github.propromarco.weatherstation.services.Helper"*/-->
+<h1 th:text="${ort.getCity().getName()}"></h1>
+<table>
+    <tr>
+        <td th:each="vorhersage : ${helper.getDates(ort.getForecasts())}" th:colspan="${helper.getColspan(ort.getForecasts(),vorhersage)}">
+            <span th:text="${vorhersage}"></span>
+        </td>
+    </tr>
+    <tr>
+        <td th:each="vorhersage : ${ort.getForecasts()}">
+            <span th:text="${helper.formatTime(vorhersage.getDateTimeString())}"></span>
+        </td>
+    </tr>
+    <tr>
+        <td th:each="vorhersage : ${ort.getForecasts()}">
+            <img th:src="${'http://openweathermap.org/img/w/' + vorhersage.getWeatherConditions().get(0).getIconName() + '.png'}"/>
+        </td>
+    </tr>
+    <!--
+        <tr>
+            <td th:each="vorhersage : ${ort.getForecasts()}">
+                <span th:text="${vorhersage.getWeatherConditions().get(0).getDescription()}"></span>
+            </td>
+        </tr>
+    -->
+    <tr>
+        <td th:each="vorhersage : ${ort.getForecasts()}">
+            <span th:text="${helper.formatTemp(vorhersage.getMain().getTemp())}"></span>
+        </td>
+    </tr>
+</table>
+</html>
