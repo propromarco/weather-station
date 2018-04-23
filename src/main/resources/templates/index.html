@@ -15,12 +15,7 @@
 <table>
     <tr>
         <td th:each="vorhersage : ${helper.getDates(ort.getForecasts())}" th:colspan="${helper.getColspan(ort.getForecasts(),vorhersage)}">
-            <span th:text="${vorhersage}"></span>
-        </td>
-    </tr>
-    <tr>
-        <td th:each="vorhersage : ${ort.getForecasts()}">
-            <span th:text="${helper.formatTime(vorhersage.getDateTimeString())}"></span>
+            <span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" th:text="${vorhersage}"></span>
         </td>
     </tr>
     <tr>
@@ -28,13 +23,11 @@
             <img th:src="${'http://openweathermap.org/img/w/' + vorhersage.getWeatherConditions().get(0).getIconName() + '.png'}"/>
         </td>
     </tr>
-    <!--
-        <tr>
-            <td th:each="vorhersage : ${ort.getForecasts()}">
-                <span th:text="${vorhersage.getWeatherConditions().get(0).getDescription()}"></span>
-            </td>
-        </tr>
-    -->
+    <tr>
+        <td th:each="vorhersage : ${ort.getForecasts()}">
+            <span th:text="${helper.formatTime(vorhersage.getDateTimeString())}"></span>
+        </td>
+    </tr>
     <tr>
         <td th:each="vorhersage : ${ort.getForecasts()}">
             <span th:text="${helper.formatTemp(vorhersage.getMain().getTemp())}"></span>
