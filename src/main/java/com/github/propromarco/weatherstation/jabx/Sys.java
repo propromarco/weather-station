@@ -1,7 +1,5 @@
 package com.github.propromarco.weatherstation.jabx;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import java.util.Date;
 
 public class Sys {
@@ -10,8 +8,8 @@ public class Sys {
     private float id;
     private float message;
     private String country;
-    private Date sunrise;
-    private Date sunset;
+    private long sunrise;
+    private long sunset;
 
     public float getMessage() {
         return message;
@@ -29,21 +27,19 @@ public class Sys {
         this.id = id;
     }
 
-    @JsonDeserialize(converter = DateConverter.class)
-    public Date getSunset() {
+    public long getSunset() {
         return sunset;
     }
 
-    public void setSunset(Date sunset) {
+    public void setSunset(long sunset) {
         this.sunset = sunset;
     }
 
-    @JsonDeserialize(converter = DateConverter.class)
-    public Date getSunrise() {
+    public long getSunrise() {
         return sunrise;
     }
 
-    public void setSunrise(Date sunrise) {
+    public void setSunrise(long sunrise) {
         this.sunrise = sunrise;
     }
 

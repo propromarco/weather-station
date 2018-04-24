@@ -45,11 +45,6 @@ public class CurrentTest {
         Current current = entity.getBody();
         assertNotNull(current);
         Sys sys = current.getSys();
-        Date sunset = sys.getSunset();
-        Date sunrise = sys.getSunrise();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-        System.out.println("Sonnenaufgang " + formatter.format(sunrise));
-        System.out.println("Sonnenuntergang " + formatter.format(sunset));
     }
 
     protected List<BasicHeader> createDefaultHeader() {

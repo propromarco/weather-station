@@ -31,8 +31,8 @@ public class WeatherStationController {
         Current troisdorfCurrent = weatherStationService.getTroisdorfCurrent();
         Current hadamarCurrent = weatherStationService.getHadamarCurrent();
         Current koelnCurrent = weatherStationService.getKoelnCurrent();
-        model.addAttribute("ort", hadamar);
-        model.addAttribute("current", hadamarCurrent);
+        model.addAttribute("ort", koeln);
+        model.addAttribute("current", koelnCurrent);
         model.addAttribute("helper", new Helper());
         return "index";
     }

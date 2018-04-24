@@ -53,7 +53,7 @@ public class WeatherStationService {
         List<ForecastEntry> recreated = new ArrayList<>();
         int count = 0;
         for (ForecastEntry forecast : forecasts) {
-            Date date = forecast.getDt();
+            long date = forecast.getDt();
             String s = helper.formatTime(date);
             if ("21:00".equals(s) || "00:00".equals(s) || "03:00".equals(s)) {
                 continue;

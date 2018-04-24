@@ -30,9 +30,26 @@
             <img th:src="${'/images/rgb/' + current.getWeather()[0].getIcon() + '.svg'}" width="250"/>
         </td>
         <td>
-            <h1>13:10</h1>
-            <span>Sonnenaufgang: 12:30</span>
-            <span>Sonnenaufgang: 13:30</span>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h1 th:text="${helper.formatDate(new java.util.Date())}">13:10</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h2 th:text="${helper.formatTime(new java.util.Date())}">13:10</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img th:src="${'/images/rgb/sunrise.svg'}" width="50"/></td>
+                    <td th:text="${helper.formatTime(current.getSys().getSunrise())}">13:30</td>
+                </tr>
+                <tr>
+                    <td><img th:src="${'/images/rgb/sunset.svg'}" width="50"/></td>
+                    <td th:text="${helper.formatTime(current.getSys().getSunset())}">13:30</td>
+                </tr>
+            </table>
         </td>
     </tr>
     <tr>

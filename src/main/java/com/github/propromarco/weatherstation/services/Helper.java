@@ -4,9 +4,11 @@ import com.github.propromarco.weatherstation.jabx.ForecastEntry;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Helper {
 
@@ -16,23 +18,23 @@ public class Helper {
 
     public Helper() {
         this.jsonDateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.dateFormatter = new SimpleDateFormat("EE, dd.MM.yyyy");
-        this.timeFormatter = new SimpleDateFormat("HH:mm");
+        this.dateFormatter = new SimpleDateFormat("EE, dd.MM.yyyy", Locale.GERMANY);
+        this.timeFormatter = new SimpleDateFormat("HH:mm", Locale.GERMANY);
     }
 
-    public String formatDate(String timeString) throws ParseException {
-        Date date = jsonDateTimeFormatter.parse(timeString);
+    public String formatDate(long d) {
+        Date date = Date.from(Instant.ofEpochSecond(d));
         String formatted = dateFormatter.format(date);
         return formatted;
     }
 
-    public String formatDate(Date date) throws ParseException {
+    public String formatDate(Date date) {
         String formatted = dateFormatter.format(date);
         return formatted;
     }
 
-    public String formatTime(String timeString) throws ParseException {
-        Date date = jsonDateTimeFormatter.parse(timeString);
+    public String formatTime(long d) {
+        Date date = Date.from(Instant.ofEpochSecond(d));
         String formatted = timeFormatter.format(date);
         return formatted;
     }

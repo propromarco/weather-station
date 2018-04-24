@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ForecastEntry {
 
-    private Date dt;
+    private long dt;
     private Main main;
     private List<Weather> weather;
     private Clouds clouds;
@@ -15,12 +15,11 @@ public class ForecastEntry {
     private Snow snow;
     private String dt_text;
 
-    @JsonDeserialize(converter = DateConverter.class)
-    public Date getDt() {
+    public long getDt() {
         return dt;
     }
 
-    public void setDt(Date dt) {
+    public void setDt(long dt) {
         this.dt = dt;
     }
 

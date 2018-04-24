@@ -16,7 +16,7 @@ public class Current {
     private Clouds clouds;
     private Rain rain;
     private Snow snow;
-    private Date dt;
+    private long dt;
     private Sys sys;
     private float id;
     private String name;
@@ -86,12 +86,11 @@ public class Current {
         this.snow = snow;
     }
 
-    @JsonDeserialize(converter = DateConverter.class)
-    public Date getDt() {
+    public long getDt() {
         return dt;
     }
 
-    public void setDt(Date dt) {
+    public void setDt(long dt) {
         this.dt = dt;
     }
 

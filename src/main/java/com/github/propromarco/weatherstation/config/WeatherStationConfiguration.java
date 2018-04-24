@@ -28,7 +28,6 @@ public class WeatherStationConfiguration {
 
     @Bean
     public RestTemplate createTemplate() {
-        TimeZone.setDefault(TimeZone.getTimeZone("Berlin"));
         CloseableHttpClient defaultHttpClient = HttpClientBuilder
                 .create()
                 .setDefaultHeaders(createDefaultHeader())
