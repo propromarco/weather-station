@@ -27,7 +27,7 @@ public class WeatherStationController {
         WeatherForecastResponse troisdorf = weatherStationService.getTroisdorf();
         WeatherForecastResponse hadamar = weatherStationService.getHadamar();
         WeatherForecastResponse koeln = weatherStationService.getKoeln();
-        model.addAttribute("ort", troisdorf);
+        model.addAttribute("ort", koeln);
         model.addAttribute("helper", new Helper());
         return "index";
     }

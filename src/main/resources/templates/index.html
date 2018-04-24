@@ -6,6 +6,8 @@
     <style type="text/css">
         td {
             text-align: center;
+            padding: 0;
+            width: 50px;
         }
     </style>
 </head>
@@ -20,7 +22,7 @@
     </tr>
     <tr>
         <td th:each="vorhersage : ${ort.getForecasts()}">
-            <img th:src="${'http://openweathermap.org/img/w/' + vorhersage.getWeatherConditions().get(0).getIconName() + '.png'}"/>
+            <img th:src="${'/images/rgb/' + vorhersage.getWeatherConditions().get(0).getIconName() + '.svg'}"/>
         </td>
     </tr>
     <tr>
