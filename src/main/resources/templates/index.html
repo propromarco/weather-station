@@ -4,36 +4,65 @@
     <title>Index</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
-        td {
-            text-align: center;
+        body {
+            margin: 0;
             padding: 0;
-            width: 50px;
+            height: 400px;
+        }
+        .maintable {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
-<!--/*@thymesVar id="ort" type="com.github.propromarco.weatherstation.data.WeatherForecastResponse"*/-->
+<body>
+<!--/*@thymesVar id="ort" type="com.github.propromarco.weatherstation.jabx.Forecast"*/-->
 <!--/*@thymesVar id="helper" type="com.github.propromarco.weatherstation.services.Helper"*/-->
-<h1 th:text="${ort.getCity().getName()}"></h1>
-<table>
+<!--/*@thymesVar id="current" type="com.github.propromarco.weatherstation.jabx.Current"*/-->
+<table class="maintable">
     <tr>
-        <td th:each="vorhersage : ${helper.getDates(ort.getForecasts())}" th:colspan="${helper.getColspan(ort.getForecasts(),vorhersage)}">
-            <span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" th:text="${vorhersage}"></span>
+        <td colspan="2">
+            <h1 th:text="${ort.getCity().getName()}"></h1>
         </td>
     </tr>
     <tr>
-        <td th:each="vorhersage : ${ort.getForecasts()}">
-            <img th:src="${'/images/rgb/' + vorhersage.getWeatherConditions().get(0).getIconName() + '.svg'}"/>
+        <td width="250">
+            <img th:src="${'/images/rgb/' + current.getWeather()[0].getIcon() + '.svg'}" width="250"/>
+        </td>
+        <td>
+            <h1>13:10</h1>
+            <span>Sonnenaufgang: 12:30</span>
+            <span>Sonnenaufgang: 13:30</span>
         </td>
     </tr>
     <tr>
-        <td th:each="vorhersage : ${ort.getForecasts()}">
-            <span th:text="${helper.formatTime(vorhersage.getDateTimeString())}"></span>
-        </td>
-    </tr>
-    <tr>
-        <td th:each="vorhersage : ${ort.getForecasts()}">
-            <span th:text="${helper.formatTemp(vorhersage.getMain().getTemp())}"></span>
+        <td colspan="2" valign="top">
+            <table>
+                <tr>
+                    <td th:each="vorhersage : ${helper.getDates(ort.getList())}"
+                        th:colspan="${helper.getColspan(ort.getList(),vorhersage)}">
+                        <span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
+                              th:text="${vorhersage}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:each="vorhersage : ${ort.getList()}">
+                        <img th:src="${'/images/rgb/' + vorhersage.getWeather().get(0).getIcon() + '.svg'}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:each="vorhersage : ${ort.getList()}">
+                        <span th:text="${helper.formatTime(vorhersage.getDt())}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:each="vorhersage : ${ort.getList()}">
+                        <span th:text="${helper.formatTemp(vorhersage.getMain().getTemp())}"></span>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
+</body>
 </html>

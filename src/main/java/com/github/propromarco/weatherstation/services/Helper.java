@@ -1,6 +1,6 @@
 package com.github.propromarco.weatherstation.services;
 
-import com.github.propromarco.weatherstation.data.ForecastWeatherData;
+import com.github.propromarco.weatherstation.jabx.ForecastEntry;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,8 +26,18 @@ public class Helper {
         return formatted;
     }
 
+    public String formatDate(Date date) throws ParseException {
+        String formatted = dateFormatter.format(date);
+        return formatted;
+    }
+
     public String formatTime(String timeString) throws ParseException {
         Date date = jsonDateTimeFormatter.parse(timeString);
+        String formatted = timeFormatter.format(date);
+        return formatted;
+    }
+
+    public String formatTime(Date date) {
         String formatted = timeFormatter.format(date);
         return formatted;
     }
@@ -36,10 +46,10 @@ public class Helper {
         return Math.round(temp) + "°C";
     }
 
-    public List<String> getDates(List<ForecastWeatherData> data) throws ParseException {
+    public List<String> getDates(List<ForecastEntry> data) throws ParseException {
         List<String> list = new ArrayList<String>();
-        for (ForecastWeatherData forecastWeatherData : data) {
-            String s = formatDate(forecastWeatherData.getDateTimeString());
+        for (ForecastEntry forecastWeatherData : data) {
+            String s = formatDate(forecastWeatherData.getDt());
             if (!list.contains(s)) {
                 list.add(s);
             }
@@ -47,14 +57,15 @@ public class Helper {
         return list;
     }
 
-    public int getColspan(List<ForecastWeatherData> data, String aktual) throws ParseException {
+    public int getColspan(List<ForecastEntry> data, String aktual) throws ParseException {
         int colspan = 0;
-        for (ForecastWeatherData forecastWeatherData : data) {
-            String s = formatDate(forecastWeatherData.getDateTimeString());
+        for (ForecastEntry forecastWeatherData : data) {
+            String s = formatDate(forecastWeatherData.getDt());
             if (s.equalsIgnoreCase(aktual)) {
                 colspan++;
             }
         }
         return colspan;
     }
+
 }

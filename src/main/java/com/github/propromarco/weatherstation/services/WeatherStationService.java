@@ -1,8 +1,8 @@
 package com.github.propromarco.weatherstation.services;
 
-import com.github.propromarco.weatherstation.data.ForecastWeatherData;
-import com.github.propromarco.weatherstation.data.OwmClient;
-import com.github.propromarco.weatherstation.data.WeatherForecastResponse;
+import com.github.propromarco.weatherstation.jabx.Current;
+import com.github.propromarco.weatherstation.jabx.Forecast;
+import com.github.propromarco.weatherstation.jabx.ForecastEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,8 +22,10 @@ public class WeatherStationService {
     private final Helper helper;
 
     @Autowired
-    private OwmClient client;
-    private WeatherForecastResponse troisdorf, hadamar, koeln;
+    private OpenweathermapService openweathermapService;
+
+    private Forecast troisdorfForecast, hadamarForecast, koelnForecast;
+    private Current troisdorfCurrent, hadamarCurrent, koelnCurrent;
 
     public WeatherStationService() {
         this.helper = new Helper();
@@ -33,22 +36,25 @@ public class WeatherStationService {
     )
     public void loadWeatherData() throws IOException, ParseException {
         log.info("Start loading WeatherData");
-        this.troisdorf = client.forecastWeatherAtCity("Troisdorf");
-        recreate(this.troisdorf);
-        this.hadamar = client.forecastWeatherAtCity("Hadamar");
-        recreate(this.hadamar);
-        this.koeln = client.forecastWeatherAtCity("Köln");
-        recreate(this.koeln);
+        this.troisdorfForecast = openweathermapService.getForecast("Troisdorf");
+        this.troisdorfCurrent = openweathermapService.getCurrect("Troisdorf");
+        recreate(this.troisdorfForecast);
+        this.hadamarForecast = openweathermapService.getForecast("Hadamar");
+        this.hadamarCurrent = openweathermapService.getCurrect("Hadamar");
+        recreate(this.hadamarForecast);
+        this.koelnForecast = openweathermapService.getForecast("Köln");
+        this.koelnCurrent = openweathermapService.getCurrect("Köln");
+        recreate(this.koelnForecast);
         log.info("End loading WeatherData");
     }
 
-    private void recreate(WeatherForecastResponse response) throws ParseException {
-        List<ForecastWeatherData> forecasts = response.getForecasts();
-        List<ForecastWeatherData> recreated = new ArrayList<ForecastWeatherData>();
+    private void recreate(Forecast response) throws ParseException {
+        List<ForecastEntry> forecasts = response.getList();
+        List<ForecastEntry> recreated = new ArrayList<>();
         int count = 0;
-        for (ForecastWeatherData forecast : forecasts) {
-            String dateTimeString = forecast.getDateTimeString();
-            String s = helper.formatTime(dateTimeString);
+        for (ForecastEntry forecast : forecasts) {
+            Date date = forecast.getDt();
+            String s = helper.formatTime(date);
             if ("21:00".equals(s) || "00:00".equals(s) || "03:00".equals(s)) {
                 continue;
             } else if (count >= 20) {
@@ -61,15 +67,27 @@ public class WeatherStationService {
         forecasts.addAll(recreated);
     }
 
-    public WeatherForecastResponse getTroisdorf() {
-        return troisdorf;
+    public Forecast getTroisdorfForecast() {
+        return troisdorfForecast;
     }
 
-    public WeatherForecastResponse getHadamar() {
-        return hadamar;
+    public Forecast getHadamarForecast() {
+        return hadamarForecast;
     }
 
-    public WeatherForecastResponse getKoeln() {
-        return koeln;
+    public Forecast getKoelnForecast() {
+        return koelnForecast;
+    }
+
+    public Current getTroisdorfCurrent() {
+        return troisdorfCurrent;
+    }
+
+    public Current getHadamarCurrent() {
+        return hadamarCurrent;
+    }
+
+    public Current getKoelnCurrent() {
+        return koelnCurrent;
     }
 }

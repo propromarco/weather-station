@@ -1,6 +1,7 @@
 package com.github.propromarco.weatherstation.services;
 
-import com.github.propromarco.weatherstation.data.WeatherForecastResponse;
+import com.github.propromarco.weatherstation.jabx.Current;
+import com.github.propromarco.weatherstation.jabx.Forecast;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +25,14 @@ public class WeatherStationController {
 
     @RequestMapping(INDEX_HTML)
     public String index(Model model) {
-        WeatherForecastResponse troisdorf = weatherStationService.getTroisdorf();
-        WeatherForecastResponse hadamar = weatherStationService.getHadamar();
-        WeatherForecastResponse koeln = weatherStationService.getKoeln();
-        model.addAttribute("ort", koeln);
+        Forecast troisdorf = weatherStationService.getTroisdorfForecast();
+        Forecast hadamar = weatherStationService.getHadamarForecast();
+        Forecast koeln = weatherStationService.getKoelnForecast();
+        Current troisdorfCurrent = weatherStationService.getTroisdorfCurrent();
+        Current hadamarCurrent = weatherStationService.getHadamarCurrent();
+        Current koelnCurrent = weatherStationService.getKoelnCurrent();
+        model.addAttribute("ort", hadamar);
+        model.addAttribute("current", hadamarCurrent);
         model.addAttribute("helper", new Helper());
         return "index";
     }
