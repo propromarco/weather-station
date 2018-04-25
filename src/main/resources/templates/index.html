@@ -41,11 +41,20 @@
             background-repeat:no-repeat;
             background-size:cover;
         }
-        .col-sm-1 {
-            width: 5%;
-            padding-left: 1px;
-            padding-right: 1px;
+        .datum {
+            display: block;
+            overflow: hidden;
+            width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
         }
+        /*.col-sm-1 {*/
+            /*width: 5%;*/
+            /*padding-left: 1px;*/
+            /*padding-right: 1px;*/
+        /*}*/
     </style>
 </head>
 <body>
@@ -87,6 +96,11 @@
         </div>
     </div>
     <div class="row">
+        <div th:class="${'col-sm-' + helper.getColspan(item.getForecast().getList(),datum)}" th:each="datum : ${helper.getDates(item.getForecast().getList())}">
+            <span th:text="${datum}" class="datum"></span>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-1" th:each="vorhersage : ${item.getForecast().getList()}">
             <img th:src="${'/images/rgb/' + vorhersage.getWeather().get(0).getIcon() + '.svg'}"/>
             <div th:text="${helper.formatTime(vorhersage.getDt())}"></div>
@@ -124,13 +138,13 @@
     });
 
     $('.carousel').carousel({
-        interval: 6000,
+        interval: false,
         pause: "false"
     });
 
-    setInterval(function() {
-        window.location.reload();
-    }, 300000);
+    // setInterval(function() {
+    //     window.location.reload();
+    // }, 300000);
 </script>
 </body>
 </html>

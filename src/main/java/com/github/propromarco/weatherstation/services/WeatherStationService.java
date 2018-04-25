@@ -55,9 +55,9 @@ public class WeatherStationService {
         for (ForecastEntry forecast : forecasts) {
             long date = forecast.getDt();
             String s = helper.formatTime(date);
-            if ("21:00".equals(s) || "00:00".equals(s) || "03:00".equals(s)) {
+            if ("20:00".equals(s) || "23:00".equals(s) || "02:00".equals(s)) {
                 continue;
-            } else if (count >= 20) {
+            } else if (count >= 12) {
                 continue;
             }
             recreated.add(forecast);

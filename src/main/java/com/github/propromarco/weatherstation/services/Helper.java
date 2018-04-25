@@ -59,6 +59,17 @@ public class Helper {
         return list;
     }
 
+    public List<ForecastEntry> getItems(List<ForecastEntry> data, String datum) {
+        List<ForecastEntry> list = new ArrayList<>();
+        for (ForecastEntry forecastWeatherData : data) {
+            String s = formatDate(forecastWeatherData.getDt());
+            if (datum.equals(s)) {
+                list.add(forecastWeatherData);
+            }
+        }
+        return list;
+    }
+
     public int getColspan(List<ForecastEntry> data, String aktual) throws ParseException {
         int colspan = 0;
         for (ForecastEntry forecastWeatherData : data) {
