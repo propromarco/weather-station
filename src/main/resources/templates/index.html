@@ -41,6 +41,11 @@
             background-repeat:no-repeat;
             background-size:cover;
         }
+        .col-sm-1 {
+            width: 5%;
+            padding-left: 1px;
+            padding-right: 1px;
+        }
     </style>
 </head>
 <body>
@@ -50,68 +55,45 @@
 <!--/*@thymesVar id="helper" type="com.github.propromarco.weatherstation.services.Helper"*/-->
         <div class="item bg" th:each="item : ${all}">
 
-<table class="maintable">
-    <tr>
-        <td colspan="2">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
             <h1 th:text="${item.getForecast().getCity().getName()}"></h1>
-        </td>
-    </tr>
-    <tr>
-        <td width="250">
-            <img th:src="${'/images/rgb/' + item.getCurrent().getWeather()[0].getIcon() + '.svg'}" width="250"/>
-        </td>
-        <td>
-            <table>
-                <tr>
-                    <td colspan="2">
-                        <h1 th:text="${helper.formatDate(new java.util.Date())}">13:10</h1>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <h2 th:text="${helper.formatTime(new java.util.Date())}">13:10</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td><img th:src="${'/images/rgb/sunrise.svg'}" width="50"/></td>
-                    <td th:text="${helper.formatTime(item.getCurrent().getSys().getSunrise())}">13:30</td>
-                </tr>
-                <tr>
-                    <td><img th:src="${'/images/rgb/sunset.svg'}" width="50"/></td>
-                    <td th:text="${helper.formatTime(item.getCurrent().getSys().getSunset())}">13:30</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2" valign="top">
-            <table>
-                <tr>
-                    <td th:each="vorhersage : ${helper.getDates(item.getForecast().getList())}"
-                        th:colspan="${helper.getColspan(item.getForecast().getList(),vorhersage)}">
-                        <span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
-                              th:text="${vorhersage}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td th:each="vorhersage : ${item.getForecast().getList()}">
-                        <img th:src="${'/images/rgb/' + vorhersage.getWeather().get(0).getIcon() + '.svg'}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td th:each="vorhersage : ${item.getForecast().getList()}">
-                        <span th:text="${helper.formatTime(vorhersage.getDt())}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td th:each="vorhersage : ${item.getForecast().getList()}">
-                        <span th:text="${helper.formatTemp(vorhersage.getMain().getTemp())}"></span>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+        </div>
+        <div class="col-sm-4">
+            <h1 th:text="${helper.formatDate(new java.util.Date())}">13:10</h1>
+        </div>
+        <div class="col-sm-2">
+            <h1 th:text="${helper.formatTime(new java.util.Date())}">13:10</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <img th:src="${'/images/rgb/' + item.getCurrent().getWeather()[0].getIcon() + '.svg'}" style="width:250px;"/>
+        </div>
+        <div class="col-sm-4">
+            <div class="col-sm-3">
+                <img th:src="${'/images/rgb/sunrise.svg'}" width="50"/>
+            </div>
+            <div class="col-sm-3">
+                <span th:text="${helper.formatTime(item.getCurrent().getSys().getSunrise())}">13:30</span>
+            </div>
+            <div class="col-sm-3">
+                <img th:src="${'/images/rgb/sunset.svg'}" width="50"/>
+            </div>
+            <div class="col-sm-3">
+                <span th:text="${helper.formatTime(item.getCurrent().getSys().getSunset())}">13:30</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1" th:each="vorhersage : ${item.getForecast().getList()}">
+            <img th:src="${'/images/rgb/' + vorhersage.getWeather().get(0).getIcon() + '.svg'}"/>
+            <div th:text="${helper.formatTime(vorhersage.getDt())}"></div>
+            <div th:text="${helper.formatTemp(vorhersage.getMain().getTemp())}"></div>
+        </div>
+    </div>
+</div>
         </div>
     </div>
     <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
