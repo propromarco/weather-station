@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class WeatherStationController {
@@ -31,8 +33,13 @@ public class WeatherStationController {
         Current troisdorfCurrent = weatherStationService.getTroisdorfCurrent();
         Current hadamarCurrent = weatherStationService.getHadamarCurrent();
         Current koelnCurrent = weatherStationService.getKoelnCurrent();
-        model.addAttribute("ort", koeln);
-        model.addAttribute("current", koelnCurrent);
+        List<CurrentWithForecast> all = new ArrayList<CurrentWithForecast>();
+        all.add(new CurrentWithForecast(troisdorfCurrent, troisdorf));
+        all.add(new CurrentWithForecast(koelnCurrent, koeln));
+        all.add(new CurrentWithForecast(hadamarCurrent, hadamar));
+        model.addAttribute("all", all);
+        model.addAttribute("ort", troisdorf);
+        model.addAttribute("current", troisdorfCurrent);
         model.addAttribute("helper", new Helper());
         return "index";
     }

@@ -3,31 +3,62 @@
 <head>
     <title>Index</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
     <style type="text/css">
-        body {
-            margin: 0;
-            padding: 0;
-            height: 400px;
+        html, body {
+            height:100%;
+            margin:0;
+            padding:0;
+        }
+        td {
+            min-width: 50px;
+            min-height: 50px;
         }
         .maintable {
             width: 100%;
             height: 100%;
         }
+        .carousel, .item, .active {
+            height:100%;
+        }
+        .carousel-inner {
+            height:100%;
+        }
+        .carousel {
+            margin-bottom: 60px;
+        }
+        .carousel-caption {
+            z-index: 10;
+        }
+        .carousel .item {
+            background-color: #fff;
+        }
+        .carousel .carousel-inner .bg {
+            background-repeat:no-repeat;
+            background-size:cover;
+        }
     </style>
 </head>
 <body>
-<!--/*@thymesVar id="ort" type="com.github.propromarco.weatherstation.jabx.Forecast"*/-->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+<!--/*@thymesVar id="all" type="java.util.List<com.github.propromarco.weatherstation.services.CurrentWithForecast>"*/-->
 <!--/*@thymesVar id="helper" type="com.github.propromarco.weatherstation.services.Helper"*/-->
-<!--/*@thymesVar id="current" type="com.github.propromarco.weatherstation.jabx.Current"*/-->
+        <div class="item bg" th:each="item : ${all}">
+
 <table class="maintable">
     <tr>
         <td colspan="2">
-            <h1 th:text="${ort.getCity().getName()}"></h1>
+            <h1 th:text="${item.getForecast().getCity().getName()}"></h1>
         </td>
     </tr>
     <tr>
         <td width="250">
-            <img th:src="${'/images/rgb/' + current.getWeather()[0].getIcon() + '.svg'}" width="250"/>
+            <img th:src="${'/images/rgb/' + item.getCurrent().getWeather()[0].getIcon() + '.svg'}" width="250"/>
         </td>
         <td>
             <table>
@@ -43,11 +74,11 @@
                 </tr>
                 <tr>
                     <td><img th:src="${'/images/rgb/sunrise.svg'}" width="50"/></td>
-                    <td th:text="${helper.formatTime(current.getSys().getSunrise())}">13:30</td>
+                    <td th:text="${helper.formatTime(item.getCurrent().getSys().getSunrise())}">13:30</td>
                 </tr>
                 <tr>
                     <td><img th:src="${'/images/rgb/sunset.svg'}" width="50"/></td>
-                    <td th:text="${helper.formatTime(current.getSys().getSunset())}">13:30</td>
+                    <td th:text="${helper.formatTime(item.getCurrent().getSys().getSunset())}">13:30</td>
                 </tr>
             </table>
         </td>
@@ -56,24 +87,24 @@
         <td colspan="2" valign="top">
             <table>
                 <tr>
-                    <td th:each="vorhersage : ${helper.getDates(ort.getList())}"
-                        th:colspan="${helper.getColspan(ort.getList(),vorhersage)}">
+                    <td th:each="vorhersage : ${helper.getDates(item.getForecast().getList())}"
+                        th:colspan="${helper.getColspan(item.getForecast().getList(),vorhersage)}">
                         <span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
                               th:text="${vorhersage}"></span>
                     </td>
                 </tr>
                 <tr>
-                    <td th:each="vorhersage : ${ort.getList()}">
+                    <td th:each="vorhersage : ${item.getForecast().getList()}">
                         <img th:src="${'/images/rgb/' + vorhersage.getWeather().get(0).getIcon() + '.svg'}"/>
                     </td>
                 </tr>
                 <tr>
-                    <td th:each="vorhersage : ${ort.getList()}">
+                    <td th:each="vorhersage : ${item.getForecast().getList()}">
                         <span th:text="${helper.formatTime(vorhersage.getDt())}"></span>
                     </td>
                 </tr>
                 <tr>
-                    <td th:each="vorhersage : ${ort.getList()}">
+                    <td th:each="vorhersage : ${item.getForecast().getList()}">
                         <span th:text="${helper.formatTemp(vorhersage.getMain().getTemp())}"></span>
                     </td>
                 </tr>
@@ -81,5 +112,43 @@
         </td>
     </tr>
 </table>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+<script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
+<script>
+    var $item = $('.item');
+    var $wHeight = $(window).height();
+    $item.eq(0).addClass('active');
+    $item.height($wHeight);
+    $item.addClass('full-screen');
+
+    // $('.carousel img').each(function() {
+    //     var $src = $(this).attr('src');
+    //     var $color = $(this).attr('data-color');
+    //     $(this).parent().css({
+    //         'background-image' : 'url(' + $src + ')',
+    //         'background-color' : $color
+    //     });
+    //     $(this).remove();
+    // });
+
+    $(window).on('resize', function (){
+        $wHeight = $(window).height();
+        $item.height($wHeight);
+    });
+
+    $('.carousel').carousel({
+        interval: 6000,
+        pause: "false"
+    });
+
+    setInterval(function() {
+        window.location.reload();
+    }, 300000);
+</script>
 </body>
 </html>

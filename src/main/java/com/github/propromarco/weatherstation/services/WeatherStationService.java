@@ -50,7 +50,7 @@ public class WeatherStationService {
 
     private void recreate(Forecast response) throws ParseException {
         List<ForecastEntry> forecasts = response.getList();
-        List<ForecastEntry> recreated = new ArrayList<>();
+        List<ForecastEntry> recreated = new ArrayList<ForecastEntry>();
         int count = 0;
         for (ForecastEntry forecast : forecasts) {
             long date = forecast.getDt();
