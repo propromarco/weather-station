@@ -2,7 +2,6 @@ package com.github.propromarco.weatherstation.services;
 
 import com.github.propromarco.weatherstation.jabx.ForecastEntry;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -52,8 +51,8 @@ public class Helper {
         return Math.round(temp) + "%";
     }
 
-    public List<String> getDates(List<ForecastEntry> data) throws ParseException {
-        List<String> list = new ArrayList<String>();
+    public List<String> getDates(List<ForecastEntry> data) {
+        List<String> list = new ArrayList<>();
         for (ForecastEntry forecastWeatherData : data) {
             String s = formatDate(forecastWeatherData.getDt());
             if (!list.contains(s)) {
@@ -74,7 +73,7 @@ public class Helper {
         return list;
     }
 
-    public int getColspan(List<ForecastEntry> data, String aktual) throws ParseException {
+    public int getColspan(List<ForecastEntry> data, String aktual) {
         int colspan = 0;
         for (ForecastEntry forecastWeatherData : data) {
             String s = formatDate(forecastWeatherData.getDt());

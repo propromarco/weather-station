@@ -21,8 +21,6 @@
                 <version>3.1</version>
                 <extensions>false</extensions>
                 <configuration>
-                    <compilerId>groovy-eclipse-compiler</compilerId>
-                    <verbose>false</verbose>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
