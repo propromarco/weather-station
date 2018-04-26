@@ -48,6 +48,10 @@ public class Helper {
         return Math.round(temp) + "°C";
     }
 
+    public String formatPercent(float temp) {
+        return Math.round(temp) + "%";
+    }
+
     public List<String> getDates(List<ForecastEntry> data) throws ParseException {
         List<String> list = new ArrayList<String>();
         for (ForecastEntry forecastWeatherData : data) {

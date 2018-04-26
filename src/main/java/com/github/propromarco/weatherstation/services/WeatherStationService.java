@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,8 +31,13 @@ public class WeatherStationService {
         this.helper = new Helper();
     }
 
+    @PostConstruct
+    public void init() throws IOException, ParseException {
+        loadWeatherData();
+    }
+
     @Scheduled(
-            cron = "*/15 * * * * *"
+            cron = "0 */5 * * * *"
     )
     public void loadWeatherData() throws IOException, ParseException {
         log.info("Start loading WeatherData");
