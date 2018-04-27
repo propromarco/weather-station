@@ -88,6 +88,7 @@
     <div class="row">
         <div class="col-sm-8">
             <img th:src="${'/images/rgb/' + item.getCurrent().getWeather()[0].getIcon() + '.svg'}" style="width:200px;"/>
+            <span th:text="${item.getCurrent().getWeather()[0].getDescription()}" style="display: block"></span>
         </div>
         <div class="col-sm-4" id="infos">
             <div class="row">
@@ -131,6 +132,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row" style="height:100px;">
     </div>
     <div class="row">
         <div th:class="${'col-sm-' + helper.getColspan(item.getForecast().getList(),datum)}" th:each="datum : ${helper.getDates(item.getForecast().getList())}">

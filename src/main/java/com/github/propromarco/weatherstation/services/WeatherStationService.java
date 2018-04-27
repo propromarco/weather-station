@@ -6,12 +6,11 @@ import com.github.propromarco.weatherstation.jabx.ForecastEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,36 +23,36 @@ public class WeatherStationService {
     @Autowired
     private OpenweathermapService openweathermapService;
 
-    private Forecast troisdorfForecast, hadamarForecast, koelnForecast;
-    private Current troisdorfCurrent, hadamarCurrent, koelnCurrent;
+    @Value("${cities}")
+    private String[] cities;
+
+    private final List<CurrentWithForecast> all = new ArrayList<>();
 
     public WeatherStationService() {
         this.helper = new Helper();
     }
 
     @PostConstruct
-    public void init() throws IOException, ParseException {
+    public void init() {
         loadWeatherData();
     }
 
     @Scheduled(
             cron = "0 */5 * * * *"
     )
-    public void loadWeatherData() throws IOException, ParseException {
+    public void loadWeatherData() {
         log.info("Start loading WeatherData");
-        this.troisdorfForecast = openweathermapService.getForecast("Troisdorf");
-        this.troisdorfCurrent = openweathermapService.getCurrect("Troisdorf");
-        recreate(this.troisdorfForecast);
-        this.hadamarForecast = openweathermapService.getForecast("Hadamar");
-        this.hadamarCurrent = openweathermapService.getCurrect("Hadamar");
-        recreate(this.hadamarForecast);
-        this.koelnForecast = openweathermapService.getForecast("Köln");
-        this.koelnCurrent = openweathermapService.getCurrect("Köln");
-        recreate(this.koelnForecast);
+        all.clear();
+        for (String city : cities) {
+            Forecast forecast = openweathermapService.getForecast(city);
+            Current current = openweathermapService.getCurrect(city);
+            recreate(forecast);
+            all.add(new CurrentWithForecast(current, forecast));
+        }
         log.info("End loading WeatherData");
     }
 
-    private void recreate(Forecast response) throws ParseException {
+    private void recreate(Forecast response) {
         List<ForecastEntry> forecasts = response.getList();
         List<ForecastEntry> recreated = new ArrayList<ForecastEntry>();
         int count = 0;
@@ -72,27 +71,7 @@ public class WeatherStationService {
         forecasts.addAll(recreated);
     }
 
-    public Forecast getTroisdorfForecast() {
-        return troisdorfForecast;
-    }
-
-    public Forecast getHadamarForecast() {
-        return hadamarForecast;
-    }
-
-    public Forecast getKoelnForecast() {
-        return koelnForecast;
-    }
-
-    public Current getTroisdorfCurrent() {
-        return troisdorfCurrent;
-    }
-
-    public Current getHadamarCurrent() {
-        return hadamarCurrent;
-    }
-
-    public Current getKoelnCurrent() {
-        return koelnCurrent;
+    public List<CurrentWithForecast> getAll() {
+        return all;
     }
 }
