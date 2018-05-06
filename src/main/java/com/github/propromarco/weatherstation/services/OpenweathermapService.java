@@ -3,6 +3,7 @@ package com.github.propromarco.weatherstation.services;
 import com.github.propromarco.weatherstation.jabx.Current;
 import com.github.propromarco.weatherstation.jabx.Forecast;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -10,7 +11,10 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class OpenweathermapService {
 
+    public static final String TEMPLATE = "OpenweathermapService";
+
     @Autowired
+    @Qualifier(OpenweathermapService.TEMPLATE)
     private RestTemplate restTemplate;
 
     public Current getCurrect(String city) {

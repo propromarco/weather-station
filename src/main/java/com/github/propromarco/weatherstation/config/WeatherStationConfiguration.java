@@ -1,8 +1,11 @@
 package com.github.propromarco.weatherstation.config;
 
+import com.github.propromarco.weatherstation.services.NewsService;
+import com.github.propromarco.weatherstation.services.OpenweathermapService;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.TimeZone;
 
 @Configuration
 public class WeatherStationConfiguration {
@@ -27,6 +29,7 @@ public class WeatherStationConfiguration {
     }
 
     @Bean
+    @Qualifier(OpenweathermapService.TEMPLATE)
     public RestTemplate createTemplate() {
         CloseableHttpClient defaultHttpClient = HttpClientBuilder
                 .create()
@@ -34,6 +37,13 @@ public class WeatherStationConfiguration {
                 .build();
         HttpComponentsClientHttpRequestFactory redirectsEnabledRequestFactory = new HttpComponentsClientHttpRequestFactory(defaultHttpClient);
         RestTemplate restTemplate = new RestTemplate(redirectsEnabledRequestFactory);
+        return restTemplate;
+    }
+
+    @Bean
+    @Qualifier(NewsService.TEMPLATE)
+    public RestTemplate createTemplate2() {
+        RestTemplate restTemplate = new RestTemplate();
         return restTemplate;
     }
 

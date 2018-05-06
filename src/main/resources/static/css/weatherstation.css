@@ -81,3 +81,13 @@ td {
     background-image: url("/images/Burg-Wissem-Weihnachtsmarkt_gross-web.jpg");
     color: #ffffff;
 }
+
+.News {
+    background-color: #000000 !important;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.News img {
+    max-width: 350px;
+}

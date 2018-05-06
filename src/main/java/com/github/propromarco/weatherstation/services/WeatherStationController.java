@@ -1,5 +1,6 @@
 package com.github.propromarco.weatherstation.services;
 
+import com.github.propromarco.weatherstation.jabx.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class WeatherStationController {
     @Autowired
     private WeatherStationService weatherStationService;
 
+    @Autowired
+    private NewsService newsService;
+
     @RequestMapping("/")
     public void redirect(HttpServletResponse response) throws IOException {
         response.sendRedirect(INDEX_HTML);
@@ -25,7 +29,9 @@ public class WeatherStationController {
     @RequestMapping(INDEX_HTML)
     public String index(Model model) {
         List<CurrentWithForecast> all = weatherStationService.getAll();
+        News news = newsService.getNews();
         model.addAttribute("all", all);
+        model.addAttribute("news", news);
         model.addAttribute("helper", new Helper());
         return "index";
     }

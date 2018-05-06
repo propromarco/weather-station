@@ -13,6 +13,42 @@
 <body>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
+        <div class="item bg News">
+            <!--/*@thymesVar id="news" type="com.github.propromarco.weatherstation.jabx.News"*/-->
+            <div class="row">
+                <div class="col-sm-1">&#160;</div>
+                <div class="col-sm-4">
+                    <h3 th:text="${news.getArticles().get(0).getTitle()}" class="title"></h3>
+                    <h4 th:text="${news.getArticles().get(0).getDescription()}" class="description"></h4>
+                    <img th:src="${news.getArticles().get(0).getUrlToImage()}"/>
+                </div>
+                <div class="col-sm-2">&#160;</div>
+                <div class="col-sm-4">
+                    <h3 th:text="${news.getArticles().get(1).getTitle()}" class="title"></h3>
+                    <h4 th:text="${news.getArticles().get(1).getDescription()}" class="description"></h4>
+                    <img th:src="${news.getArticles().get(1).getUrlToImage()}"/>
+                </div>
+                <div class="col-sm-1">&#160;</div>
+            </div>
+        </div>
+        <div class="item bg News">
+            <!--/*@thymesVar id="news" type="com.github.propromarco.weatherstation.jabx.News"*/-->
+            <div class="row">
+                <div class="col-sm-1">&#160;</div>
+                <div class="col-sm-4">
+                    <h3 th:text="${news.getArticles().get(2).getTitle()}" class="title"></h3>
+                    <h4 th:text="${news.getArticles().get(2).getDescription()}" class="description"></h4>
+                    <img th:src="${news.getArticles().get(2).getUrlToImage()}"/>
+                </div>
+                <div class="col-sm-2">&#160;</div>
+                <div class="col-sm-4">
+                    <h3 th:text="${news.getArticles().get(3).getTitle()}" class="title"></h3>
+                    <h4 th:text="${news.getArticles().get(3).getDescription()}" class="description"></h4>
+                    <img th:src="${news.getArticles().get(3).getUrlToImage()}"/>
+                </div>
+                <div class="col-sm-1">&#160;</div>
+            </div>
+        </div>
 <!--/*@thymesVar id="all" type="java.util.List<com.github.propromarco.weatherstation.services.CurrentWithForecast>"*/-->
 <!--/*@thymesVar id="helper" type="com.github.propromarco.weatherstation.services.Helper"*/-->
         <div th:class="${'item bg ' + item.getForecast().getCity().getName()}" th:each="item : ${all}">
@@ -117,7 +153,7 @@
     });
 
     $('.carousel').carousel({
-        interval: 10000,
+        interval: 15000,
         pause: "false"
     });
 
