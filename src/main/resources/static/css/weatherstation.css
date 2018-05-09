@@ -84,10 +84,15 @@ td {
 
 .News {
     background-color: #000000 !important;
-    color: #ffffff;
+    color: #def;
     font-size: 14px;
 }
 
+.News .row {
+    padding-bottom: 5px;
+}
+
 .News img {
-    max-width: 350px;
+    max-width: 200px;
+    min-height: 100px;
 }
