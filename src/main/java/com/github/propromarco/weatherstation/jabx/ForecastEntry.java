@@ -13,6 +13,7 @@ public class ForecastEntry {
     private Clouds clouds;
     private Wind wind;
     private Snow snow;
+    private Rain rain;
     private String dt_text;
 
     public long getDt() {
@@ -61,6 +62,14 @@ public class ForecastEntry {
 
     public void setSnow(Snow snow) {
         this.snow = snow;
+    }
+
+    public Rain getRain() {
+        return rain;
+    }
+
+    public void setRain(Rain rain) {
+        this.rain = rain;
     }
 
     public String getDt_text() {

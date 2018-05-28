@@ -1,6 +1,7 @@
 package com.github.propromarco.weatherstation.services;
 
 import com.github.propromarco.weatherstation.jabx.ForecastEntry;
+import com.github.propromarco.weatherstation.jabx.Rain;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -47,8 +48,8 @@ public class Helper {
         return Math.round(temp) + "°C";
     }
 
-    public String formatPercent(float temp) {
-        return Math.round(temp) + "%";
+    public String formatPercent(float percent) {
+        return Math.round(percent) + "%";
     }
 
     public List<String> getDates(List<ForecastEntry> data) {
@@ -82,6 +83,18 @@ public class Helper {
             }
         }
         return colspan;
+    }
+
+    public String formatRain(ForecastEntry forecastEntry) {
+        Rain rain = forecastEntry.getRain();
+        if (rain != null) {
+            float h = rain.get3h();
+            double rainAsDouble = Math.round(h * 10.0) / 10.0;
+            if (rainAsDouble > 0.0) {
+                return rainAsDouble + "mm";
+            }
+        }
+        return "\u00A0";
     }
 
 }

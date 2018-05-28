@@ -134,7 +134,7 @@
                     <img th:src="${'/images/rgb/' + vorhersage.getWeather().get(0).getIcon() + '.svg'}"/>
                     <div class="time" th:text="${helper.formatTime(vorhersage.getDt())}"></div>
                     <div class="temp" th:text="${helper.formatTemp(vorhersage.getMain().getTemp())}"></div>
-                    <div class="humidity" th:text="${helper.formatPercent(vorhersage.getMain().getHumidity())}"></div>
+                    <div class="humidity" th:text="${helper.formatRain(vorhersage)}"></div>
                 </div>
             </div>
         </div>
@@ -142,10 +142,8 @@
 </div>
         </div>
     </div>
-<!--
     <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
     <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
--->
 </div>
 <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/js/bootstrap.min.js"
         th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
@@ -162,13 +160,13 @@
     });
 
     $('.carousel').carousel({
-        interval: 15000,
+        interval: false,
         pause: "false"
     });
 
-    setInterval(function() {
-        window.location.reload();
-    }, 300000);
+//    setInterval(function() {
+//        window.location.reload();
+//    }, 300000);
 </script>
 </body>
 </html>
