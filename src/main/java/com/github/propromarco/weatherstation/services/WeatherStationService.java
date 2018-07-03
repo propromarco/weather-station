@@ -44,8 +44,9 @@ public class WeatherStationService {
         log.info("Start loading WeatherData");
         all.clear();
         for (String city : cities) {
-            Forecast forecast = openweathermapService.getForecast(city);
-            Current current = openweathermapService.getCurrect(city);
+            String[] cityAndCountry = city.split("_");
+            Forecast forecast = openweathermapService.getForecast(cityAndCountry);
+            Current current = openweathermapService.getCurrect(cityAndCountry);
             recreate(forecast, current);
             all.add(new CurrentWithForecast(current, forecast));
         }

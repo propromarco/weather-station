@@ -17,14 +17,32 @@ public class OpenweathermapService {
     @Qualifier(OpenweathermapService.TEMPLATE)
     private RestTemplate restTemplate;
 
-    public Current getCurrect(String city) {
-        ResponseEntity<Current> entity = restTemplate.getForEntity("http://api.openweathermap.org/data/2.5/weather?q=" + city + ",de&lang=de&units=metric", Current.class);
+    public Current getCurrect(String[] cityAndCountry) {
+        String city, country;
+        if (cityAndCountry.length == 1) {
+            city = cityAndCountry[0];
+            country = "de";
+        } else {
+            city = cityAndCountry[0];
+            country = cityAndCountry[1];
+        }
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + country + "&lang=de&units=metric";
+        ResponseEntity<Current> entity = restTemplate.getForEntity(url, Current.class);
         Current current = entity.getBody();
         return current;
     }
 
-    public Forecast getForecast(String city) {
-        ResponseEntity<Forecast> entity = restTemplate.getForEntity("http://api.openweathermap.org/data/2.5/forecast?q=" + city + ",de&lang=de&units=metric", Forecast.class);
+    public Forecast getForecast(String[] cityAndCountry) {
+        String city, country;
+        if (cityAndCountry.length == 1) {
+            city = cityAndCountry[0];
+            country = "de";
+        } else {
+            city = cityAndCountry[0];
+            country = cityAndCountry[1];
+        }
+        String url = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "," + country + "&lang=de&units=metric";
+        ResponseEntity<Forecast> entity = restTemplate.getForEntity(url, Forecast.class);
         Forecast current = entity.getBody();
         return current;
     }

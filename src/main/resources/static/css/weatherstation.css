@@ -81,6 +81,11 @@ td {
     color: #ffffff;
 }
 
+.Nesebar {
+    background-image: url("/images/burgas.jpg");
+    color: #ffffff;
+}
+
 .News {
     background-color: #000000 !important;
     color: #def;
