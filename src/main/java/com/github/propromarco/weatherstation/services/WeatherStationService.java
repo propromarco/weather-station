@@ -11,14 +11,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
+import java.util.*;
 
 @Service
 public class WeatherStationService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final Helper helper;
+    private final GregorianCalendar calendar;
 
     @Autowired
     private OpenweathermapService openweathermapService;
@@ -30,6 +31,7 @@ public class WeatherStationService {
 
     public WeatherStationService() {
         this.helper = new Helper();
+        this.calendar = new GregorianCalendar();
     }
 
     @PostConstruct
@@ -72,8 +74,10 @@ public class WeatherStationService {
                 current.getMain().setTemp_min(min);
                 current.getMain().setTemp_max(max);
             }
-            String s = helper.formatTime(date);
-            if ("19:00".equals(s) || "22:00".equals(s) || "01:00".equals(s)) {
+            Date d = Date.from(Instant.ofEpochSecond(date));
+            calendar.setTime(d);
+            int hours = calendar.get(Calendar.HOUR_OF_DAY);
+            if (hours < 4 || hours > 18) {
                 continue;
             } else if (count >= 12) {
                 continue;
