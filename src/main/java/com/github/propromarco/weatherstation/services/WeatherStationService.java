@@ -73,7 +73,7 @@ public class WeatherStationService {
                 current.getMain().setTemp_max(max);
             }
             String s = helper.formatTime(date);
-            if ("20:00".equals(s) || "23:00".equals(s) || "02:00".equals(s)) {
+            if ("19:00".equals(s) || "22:00".equals(s) || "01:00".equals(s)) {
                 continue;
             } else if (count >= 12) {
                 continue;

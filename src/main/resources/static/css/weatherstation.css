@@ -90,6 +90,12 @@ td {
     background-color: #000000 !important;
     color: #def;
     font-size: 14px;
+    padding: 0.5em;
+}
+
+.News h3 {
+    text-align: center;
+    color: burlywood;
 }
 
 .News .row {
