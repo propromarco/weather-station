@@ -13,13 +13,13 @@
 <body>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
+        <!--/*@thymesVar id="news" type="com.github.propromarco.weatherstation.jabx.News"*/-->
+<!--
         <div class="item bg News">
-            <!--/*@thymesVar id="news" type="com.github.propromarco.weatherstation.jabx.News"*/-->
             <div th:each="art : ${news.getArticles()}">
                 <h3 th:text="${art.getTitle()}"></h3>
                 <h4 th:text="${art.getDescription()}"></h4>
             </div>
-<!--
             <div class="row">
                 <div class="col-sm-3">
                     <img th:src="${news.getArticles().get(0).getUrlToImage()}"/>
@@ -60,8 +60,8 @@
                     <h3 th:text="${news.getArticles().get(4).getTitle()}" class="title"></h3>
                 </div>
             </div>
--->
         </div>
+-->
 <!--/*@thymesVar id="all" type="java.util.List<com.github.propromarco.weatherstation.services.CurrentWithForecast>"*/-->
 <!--/*@thymesVar id="helper" type="com.github.propromarco.weatherstation.services.Helper"*/-->
         <div th:class="${'item bg ' + item.getForecast().getCity().getName()}" th:each="item : ${all}">
