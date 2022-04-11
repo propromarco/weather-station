@@ -1,5 +1,8 @@
 package com.github.propromarco.weatherstation.jabx;
 
+import com.github.propromarco.weatherstation.jaxb.Current;
+import com.github.propromarco.weatherstation.jaxb.Forecast;
+import com.github.propromarco.weatherstation.jaxb.Sys;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
@@ -8,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
